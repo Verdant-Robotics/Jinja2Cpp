@@ -1,8 +1,7 @@
 #include <jinja2cpp/filesystem_handler.h>
 #include <jinja2cpp/string_helpers.h>
 
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <filesystem>
 
 #include <sstream>
 #include <fstream>
@@ -106,8 +105,9 @@ RealFileSystem::RealFileSystem(std::string rootFolder)
 
 std::string RealFileSystem::GetFullFilePath(const std::string& name) const
 {
-    boost::filesystem::path root(m_rootFolder);
+    std::filesystem::path root(m_rootFolder);
     root /= name;
+    std::cout << root.string() << std::endl;
     return root.string();
 }
 
@@ -134,12 +134,18 @@ WCharFileStreamPtr RealFileSystem::OpenWStream(const std::string& name) const
 }
 nonstd::optional<std::chrono::system_clock::time_point> RealFileSystem::GetLastModificationDate(const std::string& name) const
 {
-    boost::filesystem::path root(m_rootFolder);
+    std::filesystem::path root(m_rootFolder);
     root /= name;
 
-    auto modify_time = boost::filesystem::last_write_time(root);
+    auto modify_time = std::filesystem::last_write_time(root);
 
-    return std::chrono::system_clock::from_time_t(modify_time);
+    // TODO: is this correct?
+    
+    std::chrono::seconds secs = std::chrono::duration_cast<std::chrono::seconds>(modify_time.time_since_epoch());
+
+    return std::chrono::system_clock::time_point(secs);
+
+
 }
 CharFileStreamPtr RealFileSystem::OpenByteStream(const std::string& name) const
 {
