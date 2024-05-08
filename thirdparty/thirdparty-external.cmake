@@ -38,7 +38,7 @@ find_hdr_package(expected-lite nonstd/expected.hpp)
 find_hdr_package(variant-lite nonstd/variant.hpp)
 find_hdr_package(optional-lite nonstd/optional.hpp)
 find_hdr_package(string-view-lite nonstd/string_view.hpp)
-find_hdr_package(fmt-header-only fmt/format.h)
+# find_hdr_package(fmt-header-only fmt/format.h)
 
 find_package(RapidJSON)
 add_library(RapidJson INTERFACE)
