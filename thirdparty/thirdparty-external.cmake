@@ -34,10 +34,10 @@ macro (find_hdr_package PKG_NAME HDR_PATH)
     endif()
 endmacro ()
 
-find_hdr_package(expected-lite nonstd/expected.hpp)
-find_hdr_package(variant-lite nonstd/variant.hpp)
-find_hdr_package(optional-lite nonstd/optional.hpp)
-find_hdr_package(string-view-lite nonstd/string_view.hpp)
+# find_hdr_package(expected-lite nonstd/expected.hpp)
+# find_hdr_package(variant-lite nonstd/variant.hpp)
+# find_hdr_package(optional-lite nonstd/optional.hpp)
+# find_hdr_package(string-view-lite nonstd/string_view.hpp)
 # find_hdr_package(fmt-header-only fmt/format.h)
 
 find_package(RapidJSON)
@@ -48,18 +48,19 @@ target_include_directories(RapidJson
         $<INSTALL_INTERFACE:include>
     )
 
-if (TARGET fmt-header-only)
-    target_compile_definitions(fmt-header-only INTERFACE FMT_HEADER_ONLY=1)
-    add_library(fmt ALIAS fmt-header-only)
-endif ()
+# There's no need for this
+# if (TARGET fmt-header-only)
+#     target_compile_definitions(fmt-header-only INTERFACE FMT_HEADER_ONLY=1)
+#     add_library(fmt ALIAS fmt-header-only)
+# endif ()
 
-install(TARGETS expected-lite variant-lite optional-lite string-view-lite
-        EXPORT InstallTargets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd
-        )
+# install(TARGETS expected-lite variant-lite optional-lite string-view-lite
+#         EXPORT InstallTargets
+#         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
+#         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd
+#         )
 
 install(TARGETS fmt-header-only
         EXPORT InstallTargets
@@ -75,4 +76,4 @@ install(TARGETS RapidJson
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
         )
 
-include (./thirdparty/external_boost_deps.cmake)
+# include (./thirdparty/external_boost_deps.cmake)
