@@ -43,6 +43,7 @@ std::unordered_map<std::string, IsExpression::TesterFactoryFn> s_testers = {
     {"ne", TesterFactory<testers::Comparator>::MakeCreator(BinaryExpression::LogicalNe)},
     {"!=", TesterFactory<testers::Comparator>::MakeCreator(BinaryExpression::LogicalNe)},
     {"number", TesterFactory<testers::ValueTester>::MakeCreator(testers::ValueTester::IsNumberMode)},
+    {"integer", TesterFactory<testers::ValueTester>::MakeCreator(testers::ValueTester::IsIntegerMode)},
     {"odd", TesterFactory<testers::ValueTester>::MakeCreator(testers::ValueTester::IsOddMode)},
     {"sequence", TesterFactory<testers::ValueTester>::MakeCreator(testers::ValueTester::IsSequenceMode)},
     {"string", TesterFactory<testers::ValueTester>::MakeCreator(testers::ValueTester::IsStringMode)},
@@ -117,6 +118,8 @@ ValueTester::ValueTester(TesterParams params, ValueTester::Mode mode)
     case IsMappingMode:
         break;
     case IsNumberMode:
+        break;
+    case IsIntegerMode:
         break;
     case IsOddMode:
         break;
@@ -237,6 +240,9 @@ bool ValueTester::Test(const InternalValue& baseVal, RenderContext& context)
         break;
     case IsNumberMode:
         result = valKind == ValueKind::Integer || valKind == ValueKind::Double;
+        break;
+    case IsIntegerMode:
+        result = valKind == ValueKind::Integer;
         break;
     case IsSequenceMode:
         result = valKind == ValueKind::List;

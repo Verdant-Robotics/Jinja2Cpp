@@ -70,6 +70,7 @@ public:
         IsLowerMode,
         IsMappingMode,
         IsNumberMode,
+        IsIntegerMode,
         IsOddMode,
         IsSequenceMode,
         IsStringMode,
